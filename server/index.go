@@ -2,10 +2,20 @@ package server
 
 import (
 	"fmt"
-	"net/http"
-
 	"github.com/labstack/echo/v4"
+	"log"
+	"lugosi/ui"
+	"net/http"
 )
+
+func getUiContentHandler() http.Handler {
+	content, err := ui.Content()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return http.FileServer(http.FS(content))
+}
 
 func Start() {
 	e := echo.New()
@@ -13,9 +23,9 @@ func Start() {
 	e.HidePort = true
 	e.HideBanner = true
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
+	uiContentHandler := getUiContentHandler()
+	e.GET("/", echo.WrapHandler(uiContentHandler))
+	e.GET("/_next/*", echo.WrapHandler(getUiContentHandler()))
 
 	port := ":1313"
 	fmt.Printf("lugosi is awake at http://localhost%v", port)

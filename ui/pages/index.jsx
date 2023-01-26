@@ -1,3 +1,5 @@
-export default function Home() {
-  return <main>Works!</main>
+const Root = () => {
+  return <h1 className="text-3xl font-bold underline">Hello world!</h1>
 }
+
+export default Root

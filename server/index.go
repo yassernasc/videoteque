@@ -17,7 +17,7 @@ func getUiContentHandler() http.Handler {
 	return http.FileServer(http.FS(content))
 }
 
-func Start() {
+func Init() {
 	e := echo.New()
 
 	e.HidePort = true

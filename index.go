@@ -1,7 +1,7 @@
 package main
 
-import "lugosi/server"
+import "lugosi/cmd"
 
 func main() {
-	server.Start()
+	cmd.Init()
 }

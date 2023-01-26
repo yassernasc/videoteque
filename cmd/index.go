@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"errors"
-	"fmt"
 	"github.com/spf13/cobra"
+	"lugosi/server"
+	"lugosi/storage"
 )
 
 var root = &cobra.Command{
@@ -16,7 +17,8 @@ var root = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(args[0])
+		storage.Movie = args[0]
+		server.Init()
 	},
 }
 

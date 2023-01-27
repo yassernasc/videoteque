@@ -8,6 +8,6 @@ import (
 
 func MovieRoutes(e *echo.Echo) {
 	e.GET("/movie", func(c echo.Context) error {
-		return c.String(http.StatusOK, storage.Movie)
+		return c.Redirect(http.StatusMovedPermanently, storage.Movie)
 	})
 }

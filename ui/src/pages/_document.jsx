@@ -6,7 +6,6 @@ const icon =
 const Document = () => (
   <Html>
     <Head>
-      <title>Lugosi</title>
       <link rel="icon" href={`data:image/svg+xml,${icon}`} />
     </Head>
     <body>

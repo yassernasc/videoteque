@@ -1,10 +1,19 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-export const Player = () => {
+export const Player = ({ onError }) => {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
 
   const [immersed, setImmersed] = useState(false)
+
+  useEffect(() => {
+    const handleError = error => onError(error.message)
+
+    videoRef.current.onerror = handleError
+    if (videoRef.current.error) {
+      handleError(videoRef.current.error)
+    }
+  }, [onError])
 
   const play = () => {
     containerRef.current.requestFullscreen()

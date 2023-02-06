@@ -13,6 +13,7 @@ func Init() {
 
 	UiRoutes(e)
 	MovieRoutes(e)
+	SubtitleRoutes(e)
 
 	port := ":1313"
 	fmt.Printf("lugosi is awake at http://localhost%v", port)

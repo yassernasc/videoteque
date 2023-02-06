@@ -16,7 +16,6 @@ func MovieRoutes(e *echo.Echo) {
 		}
 
 		return c.Redirect(http.StatusMovedPermanently, redirect)
-
 	})
 
 	e.File("/static", storage.Movie)

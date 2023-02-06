@@ -3,6 +3,7 @@ package judgment
 import (
 	"net/url"
 	"os"
+	"path/filepath"
 )
 
 func IsUrl(str string) bool {
@@ -13,4 +14,17 @@ func IsUrl(str string) bool {
 func IsFile(str string) bool {
 	_, err := os.Stat(str)
 	return err == nil
+}
+
+func IsSubtitle(path string) bool {
+	pathExt := filepath.Ext(path)
+	validExtensions := [...]string{".vtt"}
+
+	for _, ext := range validExtensions {
+		if ext == pathExt {
+			return true
+		}
+	}
+
+	return false
 }

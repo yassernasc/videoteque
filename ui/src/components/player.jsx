@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import { Subtitle } from '.'
 
 export const Player = ({ onError }) => {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
+  const trackRef = useRef(null)
 
   const [immersed, setImmersed] = useState(false)
 
@@ -36,7 +38,11 @@ export const Player = ({ onError }) => {
       className={`h-screen bg-black ${cursor}`}
       onClick={toogle}
     >
-      <video ref={videoRef} className="h-full w-full" src="/movie"></video>
+      <video ref={videoRef} className="h-full w-full" src="/movie">
+        <track ref={trackRef} default src="/subtitle" />
+      </video>
+
+      <Subtitle videoRef={videoRef} trackRef={trackRef} />
     </div>
   )
 }

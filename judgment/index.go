@@ -18,7 +18,7 @@ func IsFile(str string) bool {
 
 func IsSubtitle(path string) bool {
 	pathExt := filepath.Ext(path)
-	validExtensions := [...]string{".vtt"}
+	validExtensions := [...]string{".srt", ".vtt"}
 
 	for _, ext := range validExtensions {
 		if ext == pathExt {
@@ -27,4 +27,8 @@ func IsSubtitle(path string) bool {
 	}
 
 	return false
+}
+
+func IsSrt(path string) bool {
+	return filepath.Ext(path) == ".srt"
 }

@@ -2,17 +2,12 @@ package server
 
 import (
 	"github.com/labstack/echo/v4"
-	"log"
 	"lugosi/ui"
 	"net/http"
 )
 
 func getContentHandler() http.Handler {
-	content, err := ui.Content()
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	content, _ := ui.Content()
 	return http.FileServer(http.FS(content))
 }
 

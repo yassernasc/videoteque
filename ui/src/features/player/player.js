@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Subtitle } from '.'
+import { Subtitle } from '..'
 
 export const Player = ({ onError }) => {
   const containerRef = useRef(null)

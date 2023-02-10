@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
+import { useSubtitleSettings } from './useSubtitleSettings'
 
 export const Subtitle = ({ videoRef, trackRef }) => {
   const [text, setText] = useState('')
+  const { color, position, font, size } = useSubtitleSettings()
 
   useEffect(() => {
     // hide browser default subtitle
@@ -24,10 +26,15 @@ export const Subtitle = ({ videoRef, trackRef }) => {
   const display = text === '' ? 'hidden' : 'flex'
 
   return (
-    <div className={`${display} absolute bottom-0 mb-16 w-full justify-center`}>
-      <span className="pointer-events-none w-9/12 text-center text-3xl text-yellow-400 drop-shadow-md">
-        {text}
-      </span>
+    <div
+      className={`${display} ${position} absolute bottom-0 w-full justify-center`}
+    >
+      <div className="flex w-8/12 justify-center">
+        <span
+          className={`${color} ${size} ${font} pointer-events-none inline-block rounded bg-black/40 py-1 px-6 text-justify leading-tight [text-align-last:center]`}
+          dangerouslySetInnerHTML={{ __html: text }}
+        ></span>
+      </div>
     </div>
   )
 }

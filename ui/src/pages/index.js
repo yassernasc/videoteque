@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import { Error, Player } from '../components'
+import { Error } from '../components'
+import { Player } from '../features'
 
 const Root = () => {
   const [error, setError] = useState(null)

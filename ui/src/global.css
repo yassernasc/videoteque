@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'futura';
+  src: url('/futura.ttf');
+}
+
+@font-face {
+  font-family: 'georgia';
+  src: url('/georgia.ttf');
+}
+
+@font-face {
+  font-family: 'dm-sans';
+  src: url('/dm-sans.ttf');
+}

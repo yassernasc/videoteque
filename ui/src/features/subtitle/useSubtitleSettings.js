@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useWs } from '../../hooks'
 
+const styleMap = { bordered: 'popcorn-shadow', shadowed: 'bg-black/40' }
+const updateStyle = style => styleMap[style]
+
 const colorMap = { yellow: 'text-yellow-400', white: 'text-white' }
 const updateColor = color => colorMap[color]
 
@@ -28,6 +31,7 @@ const updateSize = ({ payload, currentSize }) => {
 const middle = list => list[Math.floor(list.length / 2)]
 
 export const useSubtitleSettings = () => {
+  const [style, setStyle] = useState(() => styleMap['shadowed'])
   const [color, setColor] = useState(() => colorMap['yellow'])
   const [font, setFont] = useState(() => fontMap['georgia'])
   const [position, setPosition] = useState(() => middle(positionScales))
@@ -36,6 +40,10 @@ export const useSubtitleSettings = () => {
   const { message } = useWs()
 
   useEffect(() => {
+    if (message?.style) {
+      setStyle(updateStyle(message.style))
+    }
+
     if (message?.color) {
       setColor(updateColor(message.color))
     }
@@ -55,5 +63,5 @@ export const useSubtitleSettings = () => {
     }
   }, [message])
 
-  return { color, font, position, size }
+  return { color, font, position, size, style }
 }

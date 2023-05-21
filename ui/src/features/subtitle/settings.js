@@ -29,6 +29,7 @@ const Group = ({ label, items, handleChange }) => (
   </div>
 )
 
+const styles = ['shadowed', 'bordered']
 const colors = ['yellow', 'white']
 const fonts = ['georgia', 'futura', 'sans']
 const sizes = ['bigger', 'smaller']
@@ -43,6 +44,12 @@ export const SubtitleSettings = () => {
       <div className="mt-10">
         <H2 className="mb-0.5">Subtitles</H2>
         <div className="flex flex-col gap-2.5">
+          <Radio
+            label="style"
+            items={styles}
+            handleChange={style => emit({ style })}
+          />
+
           <Radio
             label="color"
             items={colors}

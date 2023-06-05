@@ -52,9 +52,9 @@ func validateFlags(cmd *cobra.Command, args []string) error {
 }
 
 func run(cmd *cobra.Command, args []string) {
-	storage.Movie = args[0]
+	storage.SetMovie(args[0])
 	if subtitle != "" {
-		storage.Subtitle = subtitle
+		storage.SetSubtitle(subtitle)
 	}
 	server.Init()
 }

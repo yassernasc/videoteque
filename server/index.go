@@ -20,10 +20,6 @@ func Init() {
 	WsRoutes(e, m)
 
 	ip := net.LocalIp()
-	if ip == "" {
-		ip = "localhost"
-	}
-
 	port := ":1313"
 	fmt.Printf("lugosi is awake at http://%v%v", ip, port)
 	e.Logger.Fatal(e.Start(port))

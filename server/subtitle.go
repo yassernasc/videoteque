@@ -11,21 +11,20 @@ import (
 
 func SubtitleRoutes(e *echo.Echo) {
 	e.GET("/subtitle", func(c echo.Context) error {
-		if storage.Subtitle == "" {
+		if storage.Subtitle() == "" {
 			return c.NoContent(http.StatusNotFound)
 		}
 
-		if judgment.IsSrt(storage.Subtitle) {
+		if judgment.IsSrt(storage.Subtitle()) {
 			// convert to vtt
-			srt, _ := astisub.OpenFile(storage.Subtitle)
+			srt, _ := astisub.OpenFile(storage.Subtitle())
 			var buf = &bytes.Buffer{}
 			srt.WriteToWebVTT(buf)
 			return c.Stream(http.StatusOK, "text/vtt", buf)
-
 		}
 
 		return c.Redirect(http.StatusMovedPermanently, "/subtitle/static")
 	})
 
-	e.File("/subtitle/static", storage.Subtitle)
+	e.File("/subtitle/static", storage.Subtitle())
 }

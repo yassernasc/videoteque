@@ -10,13 +10,13 @@ import (
 func MovieRoutes(e *echo.Echo) {
 	e.GET("/movie", func(c echo.Context) error {
 		// check if the current movie is a file or a link
-		redirect := storage.Movie
-		if judgment.IsFile(storage.Movie) {
+		redirect := storage.Movie()
+		if judgment.IsFile(redirect) {
 			redirect = "/movie/static"
 		}
 
 		return c.Redirect(http.StatusMovedPermanently, redirect)
 	})
 
-	e.File("/movie/static", storage.Movie)
+	e.File("/movie/static", storage.Movie())
 }

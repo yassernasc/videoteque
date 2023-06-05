@@ -1,0 +1,32 @@
+* Lugosi
+
+** Usage
+
+#+begin_src shell
+lugosi <movie entry>
+#+end_src
+
+#+begin_src shell
+lugosi <movie entry> --subtitle <subtitle entry>
+#+end_src
+
+*** Support
+
+**** Movie Entry
+
+- Local File (e.g. ~/Movies/godfather.mp4)
+- External Link (e.g. https://some-external-server/movie)
+
+**** Subtitle Entry
+
+- Local `.srt` or `.vtt` file (e.g. ~/Movies/godfather.srt)
+
+*** Roadmap
+
+- [ ] create make file
+- [ ] qrcode that redirects to settings page
+- [ ] subtitle preview on change
+- [ ] handle remote control buttons
+- [ ] ip alias, is a dns trick needed?
+- [ ] torrent magnet as movie entry
+- [ ] native desktop version

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { useTimeoutFn } from 'react-use'
 import { useWs } from '../../hooks'
 
 const styleMap = { bordered: 'popcorn-shadow', shadowed: 'bg-black/40' }
@@ -37,31 +38,43 @@ export const useSubtitleSettings = () => {
   const [position, setPosition] = useState(() => middle(positionScales))
   const [size, setSize] = useState(() => middle(sizeScales))
 
+  const [changed, setChanged] = useState(false)
+  const [, , reset] = useTimeoutFn(() => setChanged(false), 3000)
+  const updateChanged = useCallback(() => {
+    setChanged(true)
+    reset()
+  }, [reset])
+
   const { message } = useWs()
 
   useEffect(() => {
     if (message?.style) {
       setStyle(updateStyle(message.style))
+      updateChanged()
     }
 
     if (message?.color) {
       setColor(updateColor(message.color))
+      updateChanged()
     }
 
     if (message?.font) {
       setFont(updateFont(message.font))
+      updateChanged()
     }
 
     if (message?.position) {
       setPosition(currentPosition =>
         updatePosition({ payload: message.position, currentPosition })
       )
+      updateChanged()
     }
 
     if (message?.size) {
       setSize(currentSize => updateSize({ payload: message.size, currentSize }))
+      updateChanged()
     }
-  }, [message])
+  }, [message, updateChanged])
 
-  return { color, font, position, size, style }
+  return { color, font, position, size, style, changed }
 }

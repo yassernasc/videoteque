@@ -24,7 +24,7 @@ lugosi <movie entry> --subtitle <subtitle entry>
 *** Roadmap
 
 - [X] handle remote control buttons
-- [ ] subtitle preview on change
+- [X] subtitle preview on settings change
 - [ ] qrcode that redirects to settings page
 - [ ] ip alias, is a dns trick needed?
 - [ ] create make file

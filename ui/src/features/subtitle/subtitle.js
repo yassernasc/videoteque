@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSubtitleSettings } from './useSubtitleSettings'
+import { useText } from './useText'
 
 export const Subtitle = ({ videoRef, trackRef }) => {
-  const [text, setText] = useState('')
+  const text = useText(trackRef)
   const { color, position, font, size, style } = useSubtitleSettings()
 
   useEffect(() => {
@@ -10,18 +11,7 @@ export const Subtitle = ({ videoRef, trackRef }) => {
     if (videoRef.current.textTracks[0]) {
       videoRef.current.textTracks[0].mode = 'hidden'
     }
-  }, [])
-
-  useEffect(() => {
-    trackRef.current.oncuechange = e => {
-      const { activeCues } = e.target.track
-      if (activeCues.length > 0) {
-        setText(activeCues[0].text)
-      } else {
-        setText('')
-      }
-    }
-  }, [])
+  }, [videoRef])
 
   const display = text === '' ? 'hidden' : 'flex'
 

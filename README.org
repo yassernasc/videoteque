@@ -23,10 +23,10 @@ lugosi <movie entry> --subtitle <subtitle entry>
 
 *** Roadmap
 
-- [ ] create make file
-- [ ] qrcode that redirects to settings page
+- [X] handle remote control buttons
 - [ ] subtitle preview on change
-- [ ] handle remote control buttons
+- [ ] qrcode that redirects to settings page
 - [ ] ip alias, is a dns trick needed?
+- [ ] create make file
 - [ ] torrent magnet as movie entry
 - [ ] native desktop version

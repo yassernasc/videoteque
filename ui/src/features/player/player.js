@@ -61,7 +61,7 @@ export const Player = ({ onError }) => {
         <track ref={trackRef} default src="/subtitle" />
       </video>
 
-      <Subtitle videoRef={videoRef} trackRef={trackRef} />
+      <Subtitle trackRef={trackRef} />
     </div>
   )
 }

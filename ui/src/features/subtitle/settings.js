@@ -19,7 +19,11 @@ const Radio = ({ label, items, handleChange }) => (
 const Group = ({ label, items, handleChange }) => (
   <div>
     <Caption>{label}</Caption>
-    <div className="flex gap-2">
+    <div
+      className={
+        items.length > 3 ? 'grid grid-cols-2 gap-y-1 gap-x-2' : 'flex gap-2'
+      }
+    >
       {items.map(item => (
         <Button key={item} onClick={() => handleChange(item)}>
           {item}
@@ -34,6 +38,7 @@ const colors = ['yellow', 'white']
 const fonts = ['georgia', 'futura', 'sans']
 const sizes = ['bigger', 'smaller']
 const positions = ['upper', 'lower']
+const outOfSyncStates = ['too early', 'too late', 'a bit early', 'a bit late']
 
 export const SubtitleSettings = () => {
   const { emit } = useWs()
@@ -72,6 +77,12 @@ export const SubtitleSettings = () => {
             label="positioning"
             items={positions}
             handleChange={position => emit({ position })}
+          />
+
+          <Group
+            label="out of sync"
+            items={outOfSyncStates}
+            handleChange={state => emit({ state })}
           />
         </div>
       </div>

@@ -1,17 +1,25 @@
 import { useEffect } from 'react'
 import { useSubtitleSettings } from './useSubtitleSettings'
+import { useSyncSubtitle } from './useSyncSubtitle'
 import { useText } from './useText'
 
-export const Subtitle = ({ videoRef, trackRef }) => {
+export const Subtitle = ({ trackRef }) => {
   const text = useText(trackRef)
   const { color, position, font, size, style } = useSubtitleSettings()
+  useSyncSubtitle(trackRef)
 
+  // hide browser default subtitle
   useEffect(() => {
-    // hide browser default subtitle
-    if (videoRef.current.textTracks[0]) {
-      videoRef.current.textTracks[0].mode = 'hidden'
+    trackRef.current.track.mode = 'hidden'
+
+    try {
+      // needed for safari
+      // getting the error "setting getter-only property "kind"" on firefox
+      trackRef.current.track.kind = 'metadata'
+    } catch (e) {
+      console.error(e)
     }
-  }, [videoRef])
+  }, [trackRef])
 
   const display = text === '' ? 'hidden' : 'flex'
 

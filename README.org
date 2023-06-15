@@ -26,7 +26,7 @@ lugosi <movie entry> --subtitle <subtitle entry>
 - [X] handle remote control buttons
 - [X] subtitle preview on settings change
 - [X] manually sync subtitle
-- [ ] qrcode that redirects to settings page
+- [X] qrcode that redirects to settings page
 - [ ] local external ip alias, is a dns trick needed?
 - [ ] create make file
 - [ ] torrent magnet as movie entry

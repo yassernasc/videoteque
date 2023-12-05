@@ -1,6 +1,7 @@
 package judgment
 
 import (
+	"github.com/gogs/chardet"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -31,4 +32,11 @@ func IsSubtitle(path string) bool {
 
 func IsSrt(path string) bool {
 	return filepath.Ext(path) == ".srt"
+}
+
+func IsUTF8(data string) (bool, string) {
+	detector := chardet.NewTextDetector()
+	result, _ := detector.DetectBest([]byte(data))
+	charset := result.Charset
+	return charset == "UTF-8", charset
 }

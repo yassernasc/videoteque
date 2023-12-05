@@ -4,6 +4,8 @@ go 1.19
 
 require (
 	github.com/asticode/go-astisub v0.23.0
+	github.com/djimenez/iconv-go v0.0.0-20160305225143-8960e66bd3da
+	github.com/gogs/chardet v0.0.0-20211120154057-b7413eaefb8f
 	github.com/labstack/echo/v4 v4.10.0
 	github.com/mdp/qrterminal/v3 v3.1.1
 	github.com/olahol/melody v1.1.1

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Subtitle } from '..'
-import { useRemote } from '../../hooks'
+import { useRemote, useSpeed } from '../../hooks'
 
 export const Player = ({ onError }) => {
   const containerRef = useRef(null)
@@ -9,34 +9,40 @@ export const Player = ({ onError }) => {
 
   const [immersed, setImmersed] = useState(false)
 
-  const handleCommand = useCallback(command => {
-    const play = () => {
-      containerRef.current.requestFullscreen()
-      videoRef.current.play()
-      setImmersed(true)
-    }
+  const backSpeed = useSpeed()
+  const forwardSpeed = useSpeed()
 
-    const pause = () => {
-      videoRef.current.pause()
-      setImmersed(false)
-    }
+  const handleCommand = useCallback(
+    command => {
+      const play = () => {
+        containerRef.current.requestFullscreen()
+        videoRef.current.play()
+        setImmersed(true)
+      }
 
-    if (command === 'toogle') {
-      videoRef.current.paused ? play() : pause()
-    }
+      const pause = () => {
+        videoRef.current.pause()
+        setImmersed(false)
+      }
 
-    if (command === 'restart') {
-      videoRef.current.currentTime = 0
-    }
+      if (command === 'toogle') {
+        videoRef.current.paused ? play() : pause()
+      }
 
-    if (command === 'back') {
-      videoRef.current.currentTime -= 10
-    }
+      if (command === 'restart') {
+        videoRef.current.currentTime = 0
+      }
 
-    if (command === 'forward') {
-      videoRef.current.currentTime += 10
-    }
-  }, [])
+      if (command === 'back') {
+        videoRef.current.currentTime -= backSpeed()
+      }
+
+      if (command === 'forward') {
+        videoRef.current.currentTime += forwardSpeed()
+      }
+    },
+    [backSpeed, forwardSpeed]
+  )
 
   useRemote(handleCommand)
 

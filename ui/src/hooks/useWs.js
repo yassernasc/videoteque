@@ -1,8 +1,7 @@
 import useWebSocket from 'react-use-websocket'
+import { isClient } from '../utils'
 
-// window object is not defined at build time
-const url =
-  typeof window !== 'undefined' ? `ws://${window.location.host}/ws` : ''
+const url = isClient ? `ws://${window.location.host}/ws` : ''
 
 export const useWs = () => {
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(url)

@@ -17,7 +17,7 @@ var url = "http://" + ip + port
 func showMessage() {
 	fmt.Printf("lugosi is awake at %v\n\n", url)
 	fmt.Print("scan to open the settings page\n")
-	qrterminal.Generate(url+"/settings.html", qrterminal.L, os.Stdout)
+	qrterminal.Generate(url+"/settings", qrterminal.L, os.Stdout)
 }
 
 func Init() {

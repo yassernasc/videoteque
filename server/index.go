@@ -6,18 +6,22 @@ import (
 	"github.com/mdp/qrterminal/v3"
 	"github.com/olahol/melody"
 	"lugosi/net"
+	"lugosi/storage"
 	"os"
 )
 
 const port = ":1313"
 
-var ip = net.LocalIp()
-var url = "http://" + ip + port
-
 func showMessage() {
-	fmt.Printf("lugosi is awake at %v\n\n", url)
-	fmt.Print("scan to open the settings page\n")
-	qrterminal.Generate(url+"/settings", qrterminal.L, os.Stdout)
+	ip := net.LocalIp()
+	url := "http://" + ip + port
+
+	fmt.Println("lugosi is awake at", url)
+
+	if storage.ShowQrCode() {
+		fmt.Print("\n\nscan to open the settings page\n")
+		qrterminal.Generate(url+"/settings", qrterminal.L, os.Stdout)
+	}
 }
 
 func Init() {

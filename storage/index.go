@@ -7,6 +7,7 @@ import (
 
 var movie string
 var subtitle string
+var showQrCode bool
 
 func SetMovie(entry string) {
 	if judgment.IsUrl(entry) {
@@ -26,4 +27,12 @@ func SetSubtitle(entry string) {
 
 func Subtitle() string {
 	return subtitle
+}
+
+func SetShowQrCode(s bool) {
+	showQrCode = s
+}
+
+func ShowQrCode() bool {
+	return showQrCode
 }

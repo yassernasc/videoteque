@@ -9,6 +9,7 @@ import (
 )
 
 var subtitle string
+var showQrCode bool
 
 var root = &cobra.Command{
 	Use:          "lugosi",
@@ -21,6 +22,7 @@ var root = &cobra.Command{
 
 func init() {
 	root.Flags().StringVarP(&subtitle, "subtitle", "s", "", "subtitle path")
+	root.Flags().BoolVarP(&showQrCode, "qrcode", "q", false, "show qrcode that links to the settings page")
 }
 
 func validateArgs(cmd *cobra.Command, args []string) error {
@@ -53,9 +55,9 @@ func validateFlags(cmd *cobra.Command, args []string) error {
 
 func run(cmd *cobra.Command, args []string) {
 	storage.SetMovie(args[0])
-	if subtitle != "" {
-		storage.SetSubtitle(subtitle)
-	}
+	storage.SetSubtitle(subtitle)
+	storage.SetShowQrCode(showQrCode)
+
 	server.Init()
 }
 

@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 )
 
 func IsUrl(str string) bool {
@@ -15,6 +16,16 @@ func IsUrl(str string) bool {
 func IsFile(str string) bool {
 	_, err := os.Stat(str)
 	return err == nil
+}
+
+func IsMagnetLink(str string) bool {
+	pattern := `(?i)magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}`
+	matched, _ := regexp.MatchString(pattern, str)
+	return matched
+}
+
+func IsMovieEntry(entry string) bool {
+	return IsUrl(entry) || IsFile(entry) || IsMagnetLink(entry)
 }
 
 func IsSubtitle(path string) bool {

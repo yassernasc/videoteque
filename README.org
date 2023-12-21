@@ -10,24 +10,25 @@ lugosi <movie entry>
 lugosi <movie entry> --subtitle <subtitle entry>
 #+end_src
 
-*** Support
+*** Current Support
 
 **** Movie Entry
 
-- Local File (e.g. ~/Movies/godfather.mp4)
-- External Link (e.g. https://some-external-server/movie)
+- Magnet URI Link (e.g. magnet:?xt=urn:btih:<hash>)
+- Local File (e.g. ~/Movies/<movie>.mp4)
+- External Link (e.g. http://some-external-server/movie)
 
 **** Subtitle Entry
 
-- Local `.srt` or `.vtt` file (e.g. ~/Movies/godfather.srt)
+- Local `.srt` or `.vtt` file (e.g. ~/Movies/<movie>.srt)
 
 *** Roadmap
 
 - [X] handle remote control buttons
-- [X] subtitle preview on settings change
+- [X] subtitle preview when customize
 - [X] manually sync subtitle
 - [X] qrcode that redirects to settings page
-- [ ] local external ip alias, is a dns trick needed?
-- [ ] create make file
-- [ ] torrent magnet as movie entry
+- [X] torrent magnet as movie entry
+- [ ] config file
+- [ ] opensubtitles.org integration
 - [ ] native desktop version

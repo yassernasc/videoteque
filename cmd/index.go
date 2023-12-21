@@ -27,17 +27,17 @@ func init() {
 
 func validateArgs(cmd *cobra.Command, args []string) error {
 	if len(args) == 0 {
-		return errors.New("Requires a movie")
+		return errors.New("requires a movie")
 	}
 	if len(args) > 1 {
-		return errors.New("Too much blood at once")
+		return errors.New("too much blood at once")
 	}
 
-	movie := args[0]
-	if !judgment.IsUrl(movie) && !judgment.IsFile(movie) {
-		return errors.New("Invalid movie entry")
-	} else {
+	movieEntry := args[0]
+	if judgment.IsMovieEntry(movieEntry) {
 		return nil
+	} else {
+		return errors.New("invalid movie entry")
 	}
 }
 
@@ -47,7 +47,7 @@ func validateFlags(cmd *cobra.Command, args []string) error {
 	}
 
 	if !judgment.IsFile(subtitle) || !judgment.IsSubtitle(subtitle) {
-		return errors.New("Invalid subtitle")
+		return errors.New("invalid subtitle")
 	}
 
 	return nil

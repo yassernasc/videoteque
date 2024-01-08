@@ -47,11 +47,17 @@ export const Player = ({ onError }) => {
   useRemote(handleCommand)
 
   useEffect(() => {
-    const handleError = error => onError(error.message)
+    const messages = {
+      1: 'download aborted',
+      2: 'network error, please try to restart the server and refresh this page',
+      3: 'video format is not supported or the video file is broken',
+      4: 'video format is not supported, please try another browser',
+    }
 
-    videoRef.current.onerror = handleError
-    if (videoRef.current.error) {
-      handleError(videoRef.current.error)
+    videoRef.current.onerror = () => {
+      const { code } = videoRef.current.error
+      const message = messages[code] || 'unknown error'
+      onError(message)
     }
   }, [onError])
 
@@ -63,7 +69,12 @@ export const Player = ({ onError }) => {
       className={`h-screen bg-black ${cursor}`}
       onClick={() => handleCommand('toogle')}
     >
-      <video ref={videoRef} className="h-full w-full" src="/movie">
+      <video
+        className="h-full w-full"
+        preload="auto"
+        ref={videoRef}
+        src="/movie"
+      >
         <track ref={trackRef} default src="/subtitle" />
       </video>
 

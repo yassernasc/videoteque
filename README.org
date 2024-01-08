@@ -21,14 +21,3 @@ lugosi <movie entry> --subtitle <subtitle entry>
 **** Subtitle Entry
 
 - Local `.srt` or `.vtt` file (e.g. ~/Movies/<movie>.srt)
-
-*** Roadmap
-
-- [X] handle remote control buttons
-- [X] subtitle preview when customize
-- [X] manually sync subtitle
-- [X] qrcode that redirects to settings page
-- [X] torrent magnet as movie entry
-- [ ] config file
-- [ ] opensubtitles.org integration
-- [ ] native desktop version

@@ -1,24 +1,17 @@
 package storage
 
-import (
-	"lugosi/judgment"
-	"lugosi/net"
-)
+import "lugosi/movie"
 
-var movie string
+var entry *movie.Entry
 var subtitle string
 var showQrCode bool
 
-func SetMovie(entry string) {
-	if judgment.IsUrl(entry) {
-		entry = net.AvoidLocalhostNotation(entry)
-	}
-
-	movie = entry
+func SetMovie(e *movie.Entry) {
+	entry = e
 }
 
-func Movie() string {
-	return movie
+func Movie() *movie.Entry {
+	return entry
 }
 
 func SetSubtitle(entry string) {

@@ -1,4 +1,4 @@
-package judgment
+package net
 
 import "testing"
 

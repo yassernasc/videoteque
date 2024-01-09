@@ -3,12 +3,14 @@ package cmd
 import (
 	"errors"
 	"github.com/spf13/cobra"
-	"lugosi/judgment"
+	"lugosi/fs"
+	"lugosi/movie"
 	"lugosi/server"
 	"lugosi/storage"
+	"lugosi/subtitle"
 )
 
-var subtitle string
+var subtitlePath string
 var showQrCode bool
 
 var root = &cobra.Command{
@@ -21,32 +23,25 @@ var root = &cobra.Command{
 }
 
 func init() {
-	root.Flags().StringVarP(&subtitle, "subtitle", "s", "", "subtitle path")
+	root.Flags().StringVarP(&subtitlePath, "subtitle", "s", "", "subtitle path")
 	root.Flags().BoolVarP(&showQrCode, "qrcode", "q", false, "show qrcode that links to the settings page")
 }
 
 func validateArgs(cmd *cobra.Command, args []string) error {
 	if len(args) == 0 {
-		return errors.New("requires a movie")
-	}
-	if len(args) > 1 {
-		return errors.New("too much blood at once")
+		return errors.New("please provide a movie entry")
 	}
 
-	movieEntry := args[0]
-	if judgment.IsMovieEntry(movieEntry) {
-		return nil
-	} else {
-		return errors.New("invalid movie entry")
-	}
+	_, err := movie.GetFormat(args[0])
+	return err
 }
 
 func validateFlags(cmd *cobra.Command, args []string) error {
-	if subtitle == "" {
+	if subtitlePath == "" {
 		return nil
 	}
 
-	if !judgment.IsFile(subtitle) || !judgment.IsSubtitle(subtitle) {
+	if !fs.IsFile(subtitlePath) || !subtitle.IsValidFile(subtitlePath) {
 		return errors.New("invalid subtitle")
 	}
 
@@ -54,8 +49,10 @@ func validateFlags(cmd *cobra.Command, args []string) error {
 }
 
 func run(cmd *cobra.Command, args []string) {
-	storage.SetMovie(args[0])
-	storage.SetSubtitle(subtitle)
+	m := movie.New(args[0])
+
+	storage.SetMovie(m)
+	storage.SetSubtitle(subtitlePath)
 	storage.SetShowQrCode(showQrCode)
 
 	server.Init()

@@ -9,6 +9,7 @@ require (
 	github.com/gogs/chardet v0.0.0-20211120154057-b7413eaefb8f
 	github.com/labstack/echo/v4 v4.10.0
 	github.com/mdp/qrterminal/v3 v3.1.1
+	github.com/middelink/go-parse-torrent-name v0.0.0-20190301154245-3ff4efacd4c4
 	github.com/olahol/melody v1.1.1
 	github.com/spf13/cobra v1.6.1
 )

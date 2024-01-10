@@ -26,4 +26,14 @@ func MovieRoutes(e *echo.Echo) {
 	})
 
 	e.File("/movie/static", storage.Movie().Payload)
+
+	e.GET("/metadata", func(c echo.Context) error {
+		m := storage.Movie().Metadata
+
+		if m == nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, "No metadata to provide")
+		}
+
+		return c.JSON(http.StatusOK, m)
+	})
 }

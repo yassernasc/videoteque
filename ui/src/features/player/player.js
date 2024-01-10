@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Subtitle } from '..'
-import { useRemote, useSpeed } from '../../hooks'
+import { useMetadata, useRemote, useSpeed } from '../../hooks'
 
 export const Player = ({ onError }) => {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
   const trackRef = useRef(null)
+  const metadata = useMetadata()
 
   const [immersed, setImmersed] = useState(false)
 
@@ -71,6 +72,7 @@ export const Player = ({ onError }) => {
     >
       <video
         className="h-full w-full"
+        poster={metadata?.Backdrop}
         preload="auto"
         ref={videoRef}
         src="/movie"

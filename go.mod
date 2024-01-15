@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/anacrolix/torrent v1.53.2
 	github.com/asticode/go-astisub v0.23.0
+	github.com/carlmjohnson/versioninfo v0.22.5
 	github.com/cyruzin/golang-tmdb v1.5.7
 	github.com/djimenez/iconv-go v0.0.0-20160305225143-8960e66bd3da
 	github.com/gogs/chardet v0.0.0-20211120154057-b7413eaefb8f

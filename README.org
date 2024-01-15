@@ -3,11 +3,11 @@
 ** Usage
 
 #+begin_src shell
-videoteque <movie entry>
+vt <movie entry>
 #+end_src
 
 #+begin_src shell
-videoteque <movie entry> --subtitle <subtitle entry>
+vt <movie entry> --subtitle <subtitle entry>
 #+end_src
 
 *** Current Support

@@ -13,8 +13,8 @@ import (
 var subtitlePath string
 var showQrCode bool
 
-var root = &cobra.Command{
-	Use:          "videoteque <MOVIE-ENTRY>",
+var rootCmd = &cobra.Command{
+	Use:          "vt <MOVIE-ENTRY>",
 	Short:        "tool for watching movies",
 	Args:         validateArgs,
 	PreRunE:      validateFlags,
@@ -23,8 +23,12 @@ var root = &cobra.Command{
 }
 
 func init() {
-	root.Flags().StringVarP(&subtitlePath, "subtitle", "s", "", "subtitle path")
-	root.Flags().BoolVarP(&showQrCode, "qrcode", "q", false, "show qrcode that links to the settings page")
+	rootCmd.Flags().StringVarP(&subtitlePath, "subtitle", "s", "", "subtitle path")
+	rootCmd.Flags().BoolVarP(&showQrCode, "qrcode", "q", false, "show qrcode that links to the settings page")
+}
+
+func Execute() {
+	rootCmd.Execute()
 }
 
 func validateArgs(cmd *cobra.Command, args []string) error {
@@ -56,8 +60,4 @@ func run(cmd *cobra.Command, args []string) {
 	storage.SetShowQrCode(showQrCode)
 
 	server.Init()
-}
-
-func Init() {
-	root.Execute()
 }

@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "prebuild": "npm install --loglevel silent",
     "build": "next build && next export -o dist",
     "dev": "next dev",
     "format": "prettier --write .",

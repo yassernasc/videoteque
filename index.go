@@ -1,6 +1,6 @@
 package main
 
-import "lugosi/cmd"
+import "videoteque/cmd"
 
 func main() {
 	cmd.Init()

@@ -1,6 +1,6 @@
 package mime
 
-import "lugosi/fs"
+import "videoteque/fs"
 
 func Get(filename string) string {
 	// https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Containers#browser_compatibility

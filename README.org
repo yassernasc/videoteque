@@ -1,13 +1,13 @@
-* Lugosi
+* Vidéothèque
 
 ** Usage
 
 #+begin_src shell
-lugosi <movie entry>
+videoteque <movie entry>
 #+end_src
 
 #+begin_src shell
-lugosi <movie entry> --subtitle <subtitle entry>
+videoteque <movie entry> --subtitle <subtitle entry>
 #+end_src
 
 *** Current Support

@@ -4,9 +4,9 @@ import (
 	"errors"
 	"github.com/cyruzin/golang-tmdb"
 	ptn "github.com/middelink/go-parse-torrent-name"
-	"lugosi/fs"
-	"lugosi/torrent"
 	"strconv"
+	"videoteque/fs"
+	"videoteque/torrent"
 )
 
 var tc *tmdb.Client

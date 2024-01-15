@@ -31,7 +31,7 @@ const Root = () => {
   return (
     <>
       <Head>
-        <title>Lugosi</title>
+        <title>Vidéothèque</title>
       </Head>
       <PlayerRouter />
     </>

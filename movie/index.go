@@ -2,9 +2,9 @@ package movie
 
 import (
 	"errors"
-	"lugosi/fs"
-	"lugosi/net"
-	"lugosi/torrent"
+	"videoteque/fs"
+	"videoteque/net"
+	"videoteque/torrent"
 )
 
 type Format int

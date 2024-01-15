@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSubtitleSettings } from './useSubtitleSettings'
 
-const previewText = 'Bela Lugosi is dead'
+const previewText = 'Subtitle preview text'
 
 export const useText = trackRef => {
   const [text, setText] = useState('')

@@ -2,10 +2,10 @@ package server
 
 import (
 	"github.com/labstack/echo/v4"
-	"lugosi/storage"
-	"lugosi/subtitle"
 	"net/http"
 	"strings"
+	"videoteque/storage"
+	"videoteque/subtitle"
 )
 
 func SubtitleRoutes(e *echo.Echo) {

@@ -4,7 +4,7 @@ import { SubtitleSettings } from '../features'
 const Settings = () => (
   <>
     <Head>
-      <title>Lugosi - Settings</title>
+      <title>Vidéothèque 🛠️</title>
     </Head>
 
     <SubtitleSettings />

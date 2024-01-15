@@ -5,9 +5,9 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/mdp/qrterminal/v3"
 	"github.com/olahol/melody"
-	"lugosi/net"
-	"lugosi/storage"
 	"os"
+	"videoteque/net"
+	"videoteque/storage"
 )
 
 const port = ":1313"
@@ -15,8 +15,7 @@ const port = ":1313"
 func showMessage() {
 	ip := net.LocalIp()
 	url := "http://" + ip + port
-
-	fmt.Println("lugosi is awake at", url)
+	fmt.Println("url:", url)
 
 	if storage.ShowQrCode() {
 		fmt.Print("\n\nscan to open the settings page\n")

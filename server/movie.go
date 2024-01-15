@@ -2,11 +2,11 @@ package server
 
 import (
 	"github.com/labstack/echo/v4"
-	"lugosi/mime"
-	"lugosi/movie"
-	"lugosi/storage"
-	"lugosi/torrent"
 	"net/http"
+	"videoteque/mime"
+	"videoteque/movie"
+	"videoteque/storage"
+	"videoteque/torrent"
 )
 
 func MovieRoutes(e *echo.Echo) {

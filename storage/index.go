@@ -1,6 +1,6 @@
 package storage
 
-import "lugosi/movie"
+import "videoteque/movie"
 
 var entry *movie.Entry
 var subtitle string

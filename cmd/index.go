@@ -3,19 +3,19 @@ package cmd
 import (
 	"errors"
 	"github.com/spf13/cobra"
-	"lugosi/fs"
-	"lugosi/movie"
-	"lugosi/server"
-	"lugosi/storage"
-	"lugosi/subtitle"
+	"videoteque/fs"
+	"videoteque/movie"
+	"videoteque/server"
+	"videoteque/storage"
+	"videoteque/subtitle"
 )
 
 var subtitlePath string
 var showQrCode bool
 
 var root = &cobra.Command{
-	Use:          "lugosi",
-	Short:        "Goth Movie Theater",
+	Use:          "videoteque <MOVIE-ENTRY>",
+	Short:        "tool for watching movies",
 	Args:         validateArgs,
 	PreRunE:      validateFlags,
 	Run:          run,

@@ -5,8 +5,8 @@ import (
 	"github.com/asticode/go-astisub"
 	iconv "github.com/djimenez/iconv-go"
 	"github.com/gogs/chardet"
-	"lugosi/fs"
 	"os"
+	"videoteque/fs"
 )
 
 func Get(path string) string {

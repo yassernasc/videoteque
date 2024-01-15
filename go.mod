@@ -1,4 +1,4 @@
-module lugosi
+module videoteque
 
 go 1.19
 

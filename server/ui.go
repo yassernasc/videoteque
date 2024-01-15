@@ -2,8 +2,8 @@ package server
 
 import (
 	"github.com/labstack/echo/v4"
-	"lugosi/ui"
 	"net/http"
+	"videoteque/ui"
 )
 
 func getContentHandler() http.Handler {

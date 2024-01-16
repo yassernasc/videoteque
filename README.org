@@ -21,3 +21,22 @@ vt <movie entry> --subtitle <subtitle entry>
 **** Subtitle Entry
 
 - Local `.srt` or `.vtt` file (e.g. ~/Movies/<movie>.srt)
+
+** Install
+
+*** Homebrew
+
+MacOS or Linux only
+
+#+begin_src shell
+  brew tap yassernasc/videoteque https://github.com/yassernasc/videoteque.git
+  brew install videoteque
+#+end_src
+
+*** Build from Source
+
+Requires Golang and Node.js to be installed
+
+#+begin_src shell
+  make install
+#+end_src

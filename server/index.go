@@ -10,14 +10,12 @@ import (
 	"videoteque/storage"
 )
 
-const port = ":1313"
-
 func showMessage() {
 	ip := net.LocalIp()
-	url := "http://" + ip + port
+	url := fmt.Sprintf("http://%v:%v", ip, storage.Port)
 	fmt.Println("url:", url)
 
-	if storage.ShowQrCode() {
+	if storage.ShowQrCode {
 		fmt.Print("\n\nscan to open the settings page\n")
 		qrterminal.Generate(url+"/settings", qrterminal.L, os.Stdout)
 	}
@@ -36,5 +34,7 @@ func Init() {
 	WsRoutes(e, m)
 
 	showMessage()
-	e.Logger.Fatal(e.Start(port))
+
+	p := fmt.Sprintf(":%v", storage.Port)
+	e.Logger.Fatal(e.Start(p))
 }

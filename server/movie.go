@@ -11,7 +11,7 @@ import (
 
 func MovieRoutes(e *echo.Echo) {
 	e.GET("/movie", func(c echo.Context) error {
-		entry := storage.Movie()
+		entry := storage.Movie
 
 		switch entry.Format {
 		case movie.Magnet:
@@ -25,15 +25,15 @@ func MovieRoutes(e *echo.Echo) {
 		}
 	})
 
-	e.File("/movie/static", storage.Movie().Payload)
+	e.File("/movie/static", storage.Movie.Payload)
 
 	e.GET("/metadata", func(c echo.Context) error {
-		m := storage.Movie().Metadata
+		metadata := storage.Movie.Metadata
 
-		if m == nil {
+		if metadata == nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, "No metadata to provide")
 		}
 
-		return c.JSON(http.StatusOK, m)
+		return c.JSON(http.StatusOK, metadata)
 	})
 }

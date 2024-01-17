@@ -10,7 +10,7 @@ import (
 
 func SubtitleRoutes(e *echo.Echo) {
 	e.GET("/subtitle", func(c echo.Context) error {
-		path := storage.Subtitle()
+		path := storage.Subtitle
 
 		if path == "" {
 			return c.NoContent(http.StatusNotFound)

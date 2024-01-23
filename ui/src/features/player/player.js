@@ -72,7 +72,7 @@ export const Player = ({ onError }) => {
     >
       <video
         className="h-full w-full"
-        poster={metadata?.Backdrop}
+        poster={metadata?.Tmdb?.Backdrop}
         preload="auto"
         ref={videoRef}
         src="/movie"

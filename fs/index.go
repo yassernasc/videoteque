@@ -2,6 +2,8 @@ package fs
 
 import (
 	"github.com/adrg/xdg"
+	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -26,4 +28,30 @@ func Filename(path string) string {
 
 func Ext(filename string) string {
 	return filepath.Ext(filename)
+}
+
+func TempDir() string {
+	return os.TempDir()
+}
+
+func DownloadTempFile(url string, filename string) (path string, err error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	p := filepath.Join(TempDir(), filename)
+	out, err := os.Create(p)
+	if err != nil {
+		return "", err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	return p, nil
 }

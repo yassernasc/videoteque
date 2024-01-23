@@ -3,7 +3,7 @@ package torrent
 import (
 	"github.com/anacrolix/torrent"
 	"io"
-	"os"
+	"videoteque/fs"
 )
 
 var movie *torrent.File
@@ -24,7 +24,7 @@ func Stream(magnet string) (io.Reader, string) {
 
 func createClient() *torrent.Client {
 	config := torrent.NewDefaultClientConfig()
-	config.DataDir = os.TempDir()
+	config.DataDir = fs.TempDir()
 
 	c, _ := torrent.NewClient(config)
 	return c

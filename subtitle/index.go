@@ -9,14 +9,20 @@ import (
 	"videoteque/fs"
 )
 
-func Get(path string) string {
-	vtt := ensureVTT(path)
+var Entry string
+
+func Get() string {
+	if Entry == "" {
+		return Entry
+	}
+
+	vtt := ensureVTT(Entry)
 	vttUtf8 := ensureUTF8(vtt)
 
 	return vttUtf8
 }
 
-func IsValidFile(path string) bool {
+func IsValidEntry(path string) bool {
 	pathExt := fs.Ext(path)
 	validExtensions := [...]string{".srt", ".vtt"}
 

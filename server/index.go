@@ -7,15 +7,17 @@ import (
 	"github.com/olahol/melody"
 	"os"
 	"videoteque/net"
-	"videoteque/storage"
 )
+
+var ShowQrCode bool
+var Port int
 
 func showMessage() {
 	ip := net.LocalIp()
-	url := fmt.Sprintf("http://%v:%v", ip, storage.Port)
+	url := fmt.Sprintf("http://%v:%v", ip, Port)
 	fmt.Println("url:", url)
 
-	if storage.ShowQrCode {
+	if ShowQrCode {
 		fmt.Print("\n\nscan to open the settings page\n")
 		qrterminal.Generate(url+"/settings", qrterminal.L, os.Stdout)
 	}
@@ -35,6 +37,6 @@ func Init() {
 
 	showMessage()
 
-	p := fmt.Sprintf(":%v", storage.Port)
+	p := net.FormatPort(Port)
 	e.Logger.Fatal(e.Start(p))
 }

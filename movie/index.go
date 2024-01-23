@@ -7,36 +7,38 @@ import (
 	"videoteque/torrent"
 )
 
-type Format int
-type Entry struct {
+type format int
+type video struct {
 	Payload  string
-	Format   Format
-	Metadata *Metadata
+	Format   format
+	Metadata *metadata
 }
 
 const (
-	Magnet Format = iota
+	Magnet format = iota
 	File
 	Url
 )
 
-func New(p string) *Entry {
-	var e Entry
+var Video video
 
-	f, _ := GetFormat(p)
+func Init(entry string) {
+	var v video
+
+	f, _ := GetFormat(entry)
 
 	if f == Url {
-		p = net.AvoidLocalhostNotation(p)
+		entry = net.AvoidLocalhostNotation(entry)
 	}
 
-	e.Payload = p
-	e.Format = f
-	e.LoadMetadata()
+	v.Payload = entry
+	v.Format = f
+	v.loadMetadata()
 
-	return &e
+	Video = v
 }
 
-func GetFormat(p string) (Format, error) {
+func GetFormat(p string) (format, error) {
 	switch {
 	case torrent.IsMagnetLink(p):
 		return Magnet, nil

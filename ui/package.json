@@ -5,7 +5,9 @@
     "soft-build": "next build && next export -o dist",
     "dev": "next dev",
     "format": "prettier --write .",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "playwright test",
+    "test:firefox": "playwright test --project=firefox --debug"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.11",
@@ -19,6 +21,8 @@
     "swr": "^2.2.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.41.1",
+    "@types/node": "^20.11.6",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.32.0",
     "eslint-config-next": "^13.1.5",

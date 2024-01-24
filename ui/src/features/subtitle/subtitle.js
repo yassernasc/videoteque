@@ -1,12 +1,10 @@
 import { useEffect } from 'react'
 import { useSubtitleSettings } from './useSubtitleSettings'
-import { useSyncSubtitle } from './useSyncSubtitle'
 import { useText } from './useText'
 
 export const Subtitle = ({ trackRef }) => {
   const text = useText(trackRef)
   const { color, position, font, size, style } = useSubtitleSettings()
-  useSyncSubtitle(trackRef)
 
   // hide browser default subtitle
   useEffect(() => {
@@ -31,6 +29,7 @@ export const Subtitle = ({ trackRef }) => {
         <span
           className={`${style} ${color} ${size} ${font} pointer-events-none inline-block rounded py-1 px-6 text-justify leading-tight [text-align-last:center]`}
           dangerouslySetInnerHTML={{ __html: text }}
+          title="subtitle"
         ></span>
       </div>
     </div>

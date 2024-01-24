@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSubtitleSettings } from './useSubtitleSettings'
+import { useSyncSubtitle } from './useSyncSubtitle'
 
 const previewText = 'Subtitle preview text'
 
@@ -7,15 +8,20 @@ export const useText = trackRef => {
   const [text, setText] = useState('')
   const settings = useSubtitleSettings()
 
-  useEffect(() => {
-    trackRef.current.oncuechange = e => {
-      const { activeCues } = e.target.track
-      if (activeCues.length > 0) {
-        setText(activeCues[0].text)
-      } else {
-        setText('')
-      }
+  const refresh = useCallback(() => {
+    const { activeCues } = trackRef.current.track
+
+    if (activeCues.length > 0) {
+      setText(activeCues[0].text)
+    } else {
+      setText('')
     }
+  }, [trackRef])
+
+  useSyncSubtitle(trackRef, refresh)
+
+  useEffect(() => {
+    trackRef.current.oncuechange = () => refresh()
   }, [trackRef])
 
   useEffect(() => {

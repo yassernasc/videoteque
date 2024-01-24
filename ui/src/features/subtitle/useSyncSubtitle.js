@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useWs } from '../../hooks'
 
 const outOfSyncStateMap = {
@@ -8,8 +8,13 @@ const outOfSyncStateMap = {
   'too late': -2,
 }
 
-export const useSyncSubtitle = trackRef => {
+export const useSyncSubtitle = (trackRef, refreshCallback) => {
   const { message } = useWs()
+  const callbackRef = useRef()
+
+  useEffect(() => {
+    callbackRef.current = refreshCallback
+  }, [refreshCallback])
 
   useEffect(() => {
     if (!message?.state) {
@@ -32,5 +37,7 @@ export const useSyncSubtitle = trackRef => {
 
     // track can go back to live now
     track.mode = 'hidden'
-  }, [message, trackRef])
+
+    callbackRef.current()
+  }, [message, trackRef, callbackRef])
 }

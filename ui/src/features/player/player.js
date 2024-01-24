@@ -65,7 +65,7 @@ export const Player = ({ onError }) => {
   const cursor = immersed ? 'cursor-none' : 'cursor-pointer'
 
   return (
-    <div
+    <main
       ref={containerRef}
       className={`h-screen bg-black ${cursor}`}
       onClick={() => handleCommand('toogle')}
@@ -81,6 +81,6 @@ export const Player = ({ onError }) => {
       </video>
 
       <Subtitle trackRef={trackRef} />
-    </div>
+    </main>
   )
 }

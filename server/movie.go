@@ -1,56 +1,36 @@
 package server
 
 import (
-	"github.com/labstack/echo/v4"
+	"encoding/json"
+	"io"
 	"net/http"
-	"videoteque/fs"
 	"videoteque/movie"
 	"videoteque/torrent"
 )
 
-func MovieRoutes(e *echo.Echo) {
-	e.GET("/movie", func(c echo.Context) error {
-		entry := movie.Video
+func videoHandler(w http.ResponseWriter, r *http.Request) {
+	format := movie.Video.Format
+	content := movie.Video.Payload
 
-		switch entry.Format {
-		case movie.Magnet:
-			stream, displayPath := torrent.Stream(entry.Payload)
-			mime := getMime(displayPath)
-			return c.Stream(http.StatusOK, mime, stream)
-		case movie.File:
-			return c.Redirect(http.StatusMovedPermanently, "/movie/static")
-		default: // Url
-			return c.Redirect(http.StatusMovedPermanently, entry.Payload)
-		}
-	})
-
-	e.File("/movie/static", movie.Video.Payload)
-
-	e.GET("/metadata", func(c echo.Context) error {
-		metadata := movie.Video.Metadata
-
-		if metadata == nil {
-			return echo.NewHTTPError(http.StatusInternalServerError, "No metadata to provide")
-		}
-
-		return c.JSON(http.StatusOK, metadata)
-	})
+	switch format {
+	case movie.Magnet:
+		stream, displayPath := torrent.Stream(content)
+		w.Header().Set("Content-Type", getMime(displayPath))
+		io.Copy(w, stream)
+	case movie.File:
+		http.ServeFile(w, r, content)
+	case movie.Url:
+		http.Redirect(w, r, content, http.StatusMovedPermanently)
+	}
 }
 
-func getMime(filename string) string {
-	// https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Containers#browser_compatibility
-	switch fs.Ext(filename) {
-	case ".3gp":
-		return "video/3gpp"
-	case ".m4p", ".m4v", ".mp4":
-		return "video/mp4"
-	case ".mpeg", ".mpg":
-		return "video/mpeg"
-	case ".ogg", ".ogv":
-		return "video/ogg"
-	case ".webm":
-		return "video/webm"
-	default:
-		return "video/mp4" // use mp4 mime as fallback
+func metadataHandler(w http.ResponseWriter, r *http.Request) {
+	m := movie.Video.Metadata
+
+	if m == nil {
+		w.WriteHeader(http.StatusNotFound)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(m)
 	}
 }

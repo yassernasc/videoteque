@@ -1,20 +1,18 @@
 package server
 
 import (
-	"github.com/labstack/echo/v4"
+	"fmt"
 	"net/http"
-	"strings"
 	"videoteque/subtitle"
 )
 
-func SubtitleRoutes(e *echo.Echo) {
-	e.GET("/subtitle", func(c echo.Context) error {
-		s := subtitle.Get()
-		if s == "" {
-			return c.NoContent(http.StatusNotFound)
-		}
+func subtitleHandler(w http.ResponseWriter, r *http.Request) {
+	s := subtitle.Get()
 
-		stream := strings.NewReader(s)
-		return c.Stream(http.StatusOK, "text/vtt", stream)
-	})
+	if s == "" {
+		w.WriteHeader(http.StatusNotFound)
+	} else {
+		w.Header().Set("Content-Type", "text/vtt")
+		fmt.Fprint(w, s)
+	}
 }

@@ -2,15 +2,19 @@ package server
 
 import (
 	"fmt"
-	"github.com/labstack/echo/v4"
 	"github.com/mdp/qrterminal/v3"
-	"github.com/olahol/melody"
+	"net/http"
 	"os"
 	"videoteque/net"
 )
 
 var ShowQrCode bool
 var Port int
+
+func Init() {
+	showMessage()
+	startServer()
+}
 
 func showMessage() {
 	ip := net.LocalIp()
@@ -23,20 +27,23 @@ func showMessage() {
 	}
 }
 
-func Init() {
-	e := echo.New()
-	m := melody.New()
+func startServer() {
+	http.HandleFunc("/video", videoHandler)
+	http.HandleFunc("/metadata", metadataHandler)
+	http.HandleFunc("/subtitle", subtitleHandler)
+	http.HandleFunc("/ws", handleWs)
 
-	e.HidePort = true
-	e.HideBanner = true
+	http.Handle("/", uiHandler())
 
-	UiRoutes(e)
-	MovieRoutes(e)
-	SubtitleRoutes(e)
-	WsRoutes(e, m)
+	// page aliases, how to do automagically?
+	http.HandleFunc("/settings", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/settings.html", http.StatusMovedPermanently)
+	})
 
-	showMessage()
+	http.HandleFunc("/legacy", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/legacy.html", http.StatusMovedPermanently)
+	})
 
 	p := net.FormatPort(Port)
-	e.Logger.Fatal(e.Start(p))
+	panic(http.ListenAndServe(p, nil))
 }

@@ -1,21 +1,20 @@
 package server
 
 import (
-	"github.com/labstack/echo/v4"
 	"github.com/olahol/melody"
 	"net/http"
 )
 
-func getWsHandler(m *melody.Melody) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		m.HandleRequest(w, r)
+var m *melody.Melody
+
+func init() {
+	m = melody.New()
+
+	m.HandleMessage(func(s *melody.Session, msg []byte) {
+		m.Broadcast(msg)
 	})
 }
 
-func WsRoutes(e *echo.Echo, m *melody.Melody) {
-	e.GET("/ws", echo.WrapHandler(getWsHandler(m)))
-
-	m.HandleMessage(func(_ *melody.Session, msg []byte) {
-		m.Broadcast([]byte(msg))
-	})
+func handleWs(w http.ResponseWriter, r *http.Request) {
+	m.HandleRequest(w, r)
 }

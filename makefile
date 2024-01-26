@@ -3,7 +3,7 @@ APP=vt
 all: build
 
 ui:
-	npm run build --prefix ui 1>/dev/null
+	npm run hard-build --prefix ui 1>/dev/null
 
 build: ui
 	go build -o ${APP}

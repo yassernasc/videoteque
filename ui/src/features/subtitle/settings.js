@@ -35,7 +35,7 @@ const Group = ({ label, items, handleChange }) => (
 
 const styles = ['shadowed', 'bordered']
 const colors = ['yellow', 'white']
-const fonts = ['georgia', 'futura', 'sans']
+const fonts = ['sans', 'futura', 'georgia']
 const sizes = ['bigger', 'smaller']
 const positions = ['upper', 'lower']
 const outOfSyncStates = ['too early', 'too late', 'a bit early', 'a bit late']

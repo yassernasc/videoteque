@@ -9,20 +9,32 @@ const colorMap = { yellow: 'text-yellow-400', white: 'text-white' }
 const updateColor = color => colorMap[color]
 
 const fontMap = {
-  georgia: 'font-georgia',
-  futura: 'font-futura',
   sans: 'font-sans',
+  futura: 'font-futura',
+  georgia: 'font-georgia',
 }
 const updateFont = font => fontMap[font]
 
-const positionScales = ['mb-16', 'mb-24', 'mb-32', 'mb-40', 'mb-48']
+const positionScales = [
+  'mb-[5vh]',
+  'mb-[10vh]',
+  'mb-[15vh]',
+  'mb-[20vh]',
+  'mb-[25vh]',
+]
 const updatePosition = ({ payload, currentPosition }) => {
   const currentIndex = positionScales.findIndex(s => s === currentPosition)
   const newIndex = payload === 'upper' ? currentIndex + 1 : currentIndex - 1
   return positionScales[newIndex] ?? positionScales[currentIndex]
 }
 
-const sizeScales = ['text-2xl', 'text-3xl', 'text-4xl', 'text-5xl', 'text-6xl']
+const sizeScales = [
+  'text-[3.5vh]',
+  'text-[4vh]',
+  'text-[4.5vh]',
+  'text-[5vh]',
+  'text-[5.5vh]',
+]
 const updateSize = ({ payload, currentSize }) => {
   const currentIndex = sizeScales.findIndex(s => s === currentSize)
   const newIndex = payload === 'bigger' ? currentIndex + 1 : currentIndex - 1
@@ -34,7 +46,7 @@ const middle = list => list[Math.floor(list.length / 2)]
 export const useSubtitleSettings = () => {
   const [style, setStyle] = useState(() => styleMap['shadowed'])
   const [color, setColor] = useState(() => colorMap['yellow'])
-  const [font, setFont] = useState(() => fontMap['georgia'])
+  const [font, setFont] = useState(() => fontMap['sans'])
   const [position, setPosition] = useState(() => middle(positionScales))
   const [size, setSize] = useState(() => middle(sizeScales))
 

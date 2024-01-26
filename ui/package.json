@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "prebuild": "npm install --loglevel silent",
-    "build": "next build && next export -o dist",
+    "prehard-build": "npm install --loglevel silent",
+    "hard-build": "npm run soft-build",
+    "soft-build": "next build && next export -o dist",
     "dev": "next dev",
     "format": "prettier --write .",
     "lint": "next lint"

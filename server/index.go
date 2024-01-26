@@ -28,21 +28,12 @@ func showMessage() {
 }
 
 func startServer() {
-	http.HandleFunc("/video", videoHandler)
-	http.HandleFunc("/metadata", metadataHandler)
-	http.HandleFunc("/subtitle", subtitleHandler)
+	http.HandleFunc("/", uiHandler)
 	http.HandleFunc("/ws", handleWs)
 
-	http.Handle("/", uiHandler())
-
-	// page aliases, how to do automagically?
-	http.HandleFunc("/settings", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "/settings.html", http.StatusMovedPermanently)
-	})
-
-	http.HandleFunc("/legacy", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "/legacy.html", http.StatusMovedPermanently)
-	})
+	http.HandleFunc("/movie", videoHandler)
+	http.HandleFunc("/metadata", metadataHandler)
+	http.HandleFunc("/subtitle", subtitleHandler)
 
 	p := net.FormatPort(Port)
 	panic(http.ListenAndServe(p, nil))

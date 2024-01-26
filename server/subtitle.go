@@ -9,6 +9,8 @@ import (
 func subtitleHandler(w http.ResponseWriter, r *http.Request) {
 	s := subtitle.Get()
 
+	w.Header().Add("Cache-Control", "no-store")
+
 	if s == "" {
 		w.WriteHeader(http.StatusNotFound)
 	} else {

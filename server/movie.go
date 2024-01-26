@@ -12,6 +12,8 @@ func videoHandler(w http.ResponseWriter, r *http.Request) {
 	format := movie.Video.Format
 	content := movie.Video.Payload
 
+	w.Header().Add("Cache-Control", "no-store")
+
 	switch format {
 	case movie.Magnet:
 		stream, displayPath := torrent.Stream(content)
@@ -20,12 +22,14 @@ func videoHandler(w http.ResponseWriter, r *http.Request) {
 	case movie.File:
 		http.ServeFile(w, r, content)
 	case movie.Url:
-		http.Redirect(w, r, content, http.StatusMovedPermanently)
+		http.Redirect(w, r, content, http.StatusTemporaryRedirect)
 	}
 }
 
 func metadataHandler(w http.ResponseWriter, r *http.Request) {
 	m := movie.Video.Metadata
+
+	w.Header().Add("Cache-Control", "no-store")
 
 	if m == nil {
 		w.WriteHeader(http.StatusNotFound)

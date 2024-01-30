@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTimeoutFn } from 'react-use'
+import ms from 'ms'
 import { useWs } from '../../hooks'
 
 const styleMap = { bordered: 'popcorn-shadow', shadowed: 'bg-black/40' }
@@ -51,7 +52,7 @@ export const useSubtitleSettings = () => {
   const [size, setSize] = useState(() => middle(sizeScales))
 
   const [changed, setChanged] = useState(false)
-  const [, , reset] = useTimeoutFn(() => setChanged(false), 3000)
+  const [, , reset] = useTimeoutFn(() => setChanged(false), ms('3s'))
   const updateChanged = useCallback(() => {
     setChanged(true)
     reset()

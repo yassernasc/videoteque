@@ -22,7 +22,7 @@ export const useText = trackRef => {
 
   useEffect(() => {
     trackRef.current.oncuechange = () => refresh()
-  }, [trackRef])
+  }, [trackRef, refresh])
 
   useEffect(() => {
     if (settings.changed && text === '') {

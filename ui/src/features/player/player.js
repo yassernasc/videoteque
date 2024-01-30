@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Subtitle } from '..'
+import { Toast } from '../../components'
 import { useMetadata, useRemote, useSpeed } from '../../hooks'
 
 export const Player = ({ onError }) => {
@@ -70,6 +71,7 @@ export const Player = ({ onError }) => {
       className={`h-screen bg-black ${cursor}`}
       onClick={() => handleCommand('toogle')}
     >
+      <Toast />
       <video
         className="h-full w-full"
         poster={metadata?.Tmdb?.Backdrop}

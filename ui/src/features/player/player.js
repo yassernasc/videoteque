@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useFullscreen } from 'react-use'
 import { Subtitle } from '..'
 import { Toast } from '../../components'
 import { useMetadata, useRemote, useSpeed } from '../../hooks'
@@ -8,9 +9,11 @@ export const Player = ({ onError }) => {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
   const trackRef = useRef(null)
-  const metadata = useMetadata()
 
   const [immersed, setImmersed] = useState(false)
+  useFullscreen(containerRef, immersed)
+
+  const metadata = useMetadata()
   useOriginalAudio(videoRef)
 
   const backSpeed = useSpeed()
@@ -19,7 +22,6 @@ export const Player = ({ onError }) => {
   const handleCommand = useCallback(
     command => {
       const play = () => {
-        containerRef.current.requestFullscreen()
         videoRef.current.play()
         setImmersed(true)
       }
@@ -70,7 +72,7 @@ export const Player = ({ onError }) => {
   return (
     <main
       ref={containerRef}
-      className={`h-screen bg-black ${cursor}`}
+      className={`h-screen w-screen bg-black ${cursor}`}
       onClick={() => handleCommand('toogle')}
     >
       <Toast />
@@ -81,9 +83,8 @@ export const Player = ({ onError }) => {
         ref={videoRef}
         src="/movie"
       >
-        <track ref={trackRef} default src="/subtitle" />
+        <track ref={trackRef} default src="/subtitle" kind="metadata" />
       </video>
-
       <Subtitle trackRef={trackRef} />
     </main>
   )

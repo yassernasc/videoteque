@@ -3,8 +3,8 @@ export const isBrowserModern = () => {
     return false
   }
 
-  // test rbg color alpha parameter support, css feature from 2018
-  return CSS.supports('background: rgb(255 122 127 / .2)')
+  // test css variables (custom properties) support, css feature from 2016
+  return CSS.supports('color: var(--text-color)')
 }
 
 // window object is not defined at build time

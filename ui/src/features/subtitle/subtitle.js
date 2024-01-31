@@ -1,23 +1,9 @@
-import { useEffect } from 'react'
 import { useSubtitleSettings } from './useSubtitleSettings'
 import { useText } from './useText'
 
 export const Subtitle = ({ trackRef }) => {
   const text = useText(trackRef)
   const { color, position, font, size, style } = useSubtitleSettings()
-
-  // hide browser default subtitle
-  useEffect(() => {
-    trackRef.current.track.mode = 'hidden'
-
-    try {
-      // needed for safari
-      // getting the error "setting getter-only property "kind"" on firefox
-      trackRef.current.track.kind = 'metadata'
-    } catch (e) {
-      console.error(e)
-    }
-  }, [trackRef])
 
   const display = text === '' ? 'hidden' : 'flex'
 

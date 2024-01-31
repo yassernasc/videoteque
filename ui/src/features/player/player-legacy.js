@@ -1,6 +1,7 @@
 export const PlayerLegacy = () => (
   <div>
     <video
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       className="video-js mx-auto block"
       controls
       preload="auto"

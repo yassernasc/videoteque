@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Subtitle } from '..'
 import { Toast } from '../../components'
 import { useMetadata, useRemote, useSpeed } from '../../hooks'
+import { useOriginalAudio } from './useOriginalAudio'
 
 export const Player = ({ onError }) => {
   const containerRef = useRef(null)
@@ -10,6 +11,7 @@ export const Player = ({ onError }) => {
   const metadata = useMetadata()
 
   const [immersed, setImmersed] = useState(false)
+  useOriginalAudio(videoRef)
 
   const backSpeed = useSpeed()
   const forwardSpeed = useSpeed()

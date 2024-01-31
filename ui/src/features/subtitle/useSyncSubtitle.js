@@ -12,12 +12,11 @@ export const useSyncSubtitle = (trackRef, refreshCallback) => {
       // track is now in maintenance mode
       track.mode = 'disabled'
 
-      Object.entries(cues)
-        .filter(([key]) => key !== 'length')
-        .forEach(([, c]) => {
-          c.startTime += offset
-          c.endTime += offset
-        })
+      for (let i = 0; i < cues.length; i += 1) {
+        const cue = cues[i]
+        cue.startTime += offset
+        cue.endTime += offset
+      }
 
       // back to previous state
       track.mode = 'hidden'

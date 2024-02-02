@@ -89,10 +89,10 @@ func run(cmd *cobra.Command, args []string) {
 
 func validateArgs(cmd *cobra.Command, args []string) error {
 	if len(args) == 0 {
-		return errors.New("please provide a movie entry")
+		return errors.New("please provide a video entry")
 	}
 
-	_, err := movie.GetFormat(args[0])
+	_, err := movie.NewVideo(args[0])
 	return err
 }
 

@@ -4,7 +4,6 @@ import (
 	"errors"
 	ptn "github.com/middelink/go-parse-torrent-name"
 	"videoteque/fs"
-	"videoteque/torrent"
 )
 
 type kind int
@@ -17,7 +16,7 @@ type guessed struct {
 	Year    int
 }
 
-type metadata struct {
+type Metadata struct {
 	Guessed *guessed
 	Tmdb    *tmdbInfo
 }
@@ -27,29 +26,17 @@ const (
 	Episode
 )
 
-func (e *video) loadMetadata() {
-	var filename string
+var MetadataRef *Metadata
 
-	switch e.Format {
-	case Magnet:
-		path := torrent.InitClient(e.Payload)
-		filename = fs.Filename(path)
-	case File:
-		filename = fs.Filename(e.Payload)
-	}
-
-	if filename != "" {
-		metadata, err := infer(filename)
-		if err != nil {
-			e.Metadata = nil
-		} else {
-			e.Metadata = metadata
-		}
+func loadMetadata(v Video) {
+	filename := fs.Filename(v.Path())
+	if m, err := infer(filename); err == nil {
+		MetadataRef = m
 	}
 }
 
-func infer(filename string) (*metadata, error) {
-	var m metadata
+func infer(filename string) (*Metadata, error) {
+	var m Metadata
 
 	parsed, err := ptn.Parse(filename)
 	if err != nil {

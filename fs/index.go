@@ -26,12 +26,16 @@ func Filename(path string) string {
 	return f
 }
 
-func Ext(filename string) string {
-	return filepath.Ext(filename)
+func Ext(path string) string {
+	return filepath.Ext(path)
 }
 
 func TempDir() string {
 	return os.TempDir()
+}
+
+func OnTempDir(path string) string {
+	return filepath.Join(TempDir(), path)
 }
 
 func DownloadTempFile(url string, filename string) (path string, err error) {
@@ -41,7 +45,7 @@ func DownloadTempFile(url string, filename string) (path string, err error) {
 	}
 	defer resp.Body.Close()
 
-	p := filepath.Join(TempDir(), filename)
+	p := OnTempDir(filename)
 	out, err := os.Create(p)
 	if err != nil {
 		return "", err

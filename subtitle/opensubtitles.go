@@ -76,10 +76,10 @@ func shouldProceed() bool {
 	return Entry == "" &&
 		credentials.Username != "" &&
 		credentials.Password != "" &&
-		movie.Video.Metadata != nil &&
-		movie.Video.Metadata.Tmdb != nil &&
+		movie.MetadataRef != nil &&
+		movie.MetadataRef.Tmdb != nil &&
 		lang.UserLang != "" &&
-		!lang.IsUserLang(movie.Video.Metadata.Tmdb.Language)
+		!lang.IsUserLang(movie.MetadataRef.Tmdb.Language)
 }
 
 func downloadAutomatically() error {
@@ -163,7 +163,7 @@ func search() (id int, err error) {
 }
 
 func getSearchOptions() string {
-	meta := movie.Video.Metadata
+	meta := movie.MetadataRef
 
 	v := url.Values{}
 	v.Add("ai_translated", "exclude")
@@ -175,6 +175,11 @@ func getSearchOptions() string {
 		v.Add("type", "movie")
 	} else {
 		v.Add("type", "episode")
+	}
+
+	hash, err := moviehash()
+	if err == nil {
+		v.Add("moviehash", hash)
 	}
 
 	return v.Encode()

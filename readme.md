@@ -12,7 +12,6 @@ vt <movie entry>
 
 - Magnet URI Link (e.g. magnet:?xt=urn:btih:\<hash\>)
 - Local Video File (e.g. ~/Movies/\<movie\>.mp4)
-- External Link (e.g. http://some-external-server/movie)
 
 ### Manual Subtitle Entry
 

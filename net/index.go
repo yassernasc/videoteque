@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net"
 	"net/url"
-	"strings"
 )
 
 func LocalIp() string {
@@ -18,16 +17,6 @@ func LocalIp() string {
 	}
 
 	return ""
-}
-
-func AvoidLocalhostNotation(url string) string {
-	notations := [...]string{"localhost", "127.0.0.1"}
-	for _, n := range notations {
-		if strings.Contains(url, n) {
-			return strings.Replace(url, n, LocalIp(), -1)
-		}
-	}
-	return url
 }
 
 func IsUrl(str string) bool {

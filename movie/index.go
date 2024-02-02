@@ -2,51 +2,32 @@ package movie
 
 import (
 	"errors"
+	"io"
 	"videoteque/fs"
-	"videoteque/net"
 	"videoteque/torrent"
 )
 
-type format int
-type video struct {
-	Payload  string
-	Format   format
-	Metadata *metadata
+type Video interface {
+	Reader() io.ReadSeekCloser
+	Path() string
+	Size() int64
 }
 
-const (
-	Magnet format = iota
-	File
-	Url
-)
-
-var Video video
+var VideoRef Video
 
 func Init(entry string) {
-	var v video
-
-	f, _ := GetFormat(entry)
-
-	if f == Url {
-		entry = net.AvoidLocalhostNotation(entry)
-	}
-
-	v.Payload = entry
-	v.Format = f
-	v.loadMetadata()
-
-	Video = v
+	v, _ := NewVideo(entry)
+	loadMetadata(v)
+	VideoRef = v
 }
 
-func GetFormat(p string) (format, error) {
+func NewVideo(entry string) (Video, error) {
 	switch {
-	case torrent.IsMagnetLink(p):
-		return Magnet, nil
-	case fs.IsFile(p):
-		return File, nil
-	case net.IsUrl(p):
-		return Url, nil
+	case torrent.IsMagnetLink(entry):
+		return newTorrentVideo(entry), nil
+	case fs.IsFile(entry):
+		return newLocalVideo(entry), nil
 	default:
-		return Url, errors.New("invalid movie entry format")
+		return nil, errors.New("invalid movie entry format")
 	}
 }

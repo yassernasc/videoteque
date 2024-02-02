@@ -2,35 +2,30 @@ package torrent
 
 import (
 	"github.com/anacrolix/torrent"
-	"io"
 	"videoteque/fs"
 )
 
-var movie *torrent.File
+var client *torrent.Client
+var video *torrent.File
 
-func InitClient(magnet string) string {
-	c := createClient()
-
-	t, _ := c.AddMagnet(magnet)
-	<-t.GotInfo()
-
-	movie = findMovie(t.Files())
-	return movie.DisplayPath()
-}
-
-func Stream(magnet string) (io.Reader, string) {
-	return movie.NewReader(), movie.DisplayPath()
-}
-
-func createClient() *torrent.Client {
+func init() {
 	config := torrent.NewDefaultClientConfig()
 	config.DataDir = fs.TempDir()
 
 	c, _ := torrent.NewClient(config)
-	return c
+	client = c
 }
 
-func findMovie(files []*torrent.File) *torrent.File {
+func AddMagnet(magnet string) *torrent.File {
+	t, _ := client.AddMagnet(magnet)
+	<-t.GotInfo()
+
+	video = findVideo(t.Files())
+	video.Download()
+	return video
+}
+
+func findVideo(files []*torrent.File) *torrent.File {
 	var m *torrent.File
 	var maxSize int64
 

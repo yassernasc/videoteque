@@ -2,8 +2,8 @@ package server
 
 import (
 	"encoding/json"
-	"io"
 	"net/http"
+	"time"
 	"videoteque/movie"
 )
 
@@ -11,13 +11,7 @@ func videoHandler(w http.ResponseWriter, r *http.Request) {
 	v := movie.VideoRef
 
 	w.Header().Add("Cache-Control", "no-store")
-
-	mime := getMime(v.Path())
-	w.Header().Set("Content-Type", mime)
-
-	reader := v.Reader()
-	io.Copy(w, reader)
-	defer reader.Close()
+	http.ServeContent(w, r, v.Path(), time.Now(), v.Reader())
 }
 
 func metadataHandler(w http.ResponseWriter, r *http.Request) {

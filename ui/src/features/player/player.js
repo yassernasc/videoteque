@@ -11,7 +11,8 @@ export const Player = ({ onError }) => {
   const trackRef = useRef(null)
 
   const [immersed, setImmersed] = useState(false)
-  useFullscreen(containerRef, immersed)
+  const [dirty, setDirty] = useState(false)
+  useFullscreen(containerRef, dirty)
 
   const metadata = useMetadata()
   useOriginalAudio(videoRef)
@@ -24,6 +25,7 @@ export const Player = ({ onError }) => {
       const play = () => {
         videoRef.current.play()
         setImmersed(true)
+        setDirty(true)
       }
 
       const pause = () => {
@@ -67,6 +69,7 @@ export const Player = ({ onError }) => {
     }
   }, [onError])
 
+  const fit = dirty ? 'object-contain' : 'object-cover'
   const cursor = immersed ? 'cursor-none' : 'cursor-pointer'
 
   return (
@@ -77,7 +80,7 @@ export const Player = ({ onError }) => {
     >
       <Toast />
       <video
-        className="h-full w-full"
+        className={`h-full w-full ${fit}`}
         poster={metadata?.Tmdb?.Backdrop}
         preload="auto"
         ref={videoRef}

@@ -1,6 +1,6 @@
+import { PlayerLegacy } from 'features/player'
 import Head from 'next/head'
 import Script from 'next/script'
-import { PlayerLegacy } from '../features'
 
 const Legacy = () => (
   <>

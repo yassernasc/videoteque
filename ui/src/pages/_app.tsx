@@ -1,3 +1,8 @@
+// organize-imports-ignore
+
+// core-js polyfills
+import 'core-js/es/object/has-own'
+
 // custom polyfills for Intl.DisplayNames
 import '@formatjs/intl-getcanonicallocales/polyfill'
 import '@formatjs/intl-locale/polyfill'

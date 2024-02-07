@@ -2,24 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'futura';
-  src: url('/futura.ttf');
+:root {
+    --10px-in-rem: 0.625rem; /* 16px */
+    --1px-in-rem: 0.063rem;
+    --2px-in-rem: 0.125rem;
+    --negative-1px-in-rem: calc(var(--1px-in-rem) * -1);
+    --negative-2px-in-rem: calc(var(--2px-in-rem) * -1);
 }
 
 @font-face {
-  font-family: 'georgia';
-  src: url('/georgia.ttf');
+    font-family: 'futura';
+    src: url('/futura.ttf');
 }
 
 @font-face {
-  font-family: 'dm-sans';
-  src: url('/dm-sans.ttf');
+    font-family: 'georgia';
+    src: url('/georgia.ttf');
 }
 
-@layer utilities {
-  .popcorn-shadow {
-    text-shadow: 0px 0px 10px black, -2px -2px 1px black, 2px -2px 1px black,
-      -2px 2px 1px black, 2px 2px 1px black;
-  }
+@font-face {
+    font-family: 'dm-sans';
+    src: url('/dm-sans.ttf');
+}
+
+@layer base {
+    html {
+        @media screen(fhd) {
+            font-size: 1.25rem;
+        }
+
+        @media screen(uhd) {
+            font-size: 2.2rem;
+        }
+    }
+}
+
+@layer components {
+    .popcorn-shadow {
+        text-shadow: 0rem 0rem var(--10px-in-rem) black,
+            var(--negative-2px-in-rem) var(--negative-2px-in-rem)
+                var(--1px-in-rem) black,
+            var(--2px-in-rem) var(--negative-2px-in-rem) var(--1px-in-rem) black,
+            var(--negative-2px-in-rem) 2px var(--1px-in-rem) black,
+            var(--2px-in-rem) var(--2px-in-rem) var(--1px-in-rem) black;
+    }
 }

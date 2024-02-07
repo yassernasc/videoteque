@@ -1,9 +1,9 @@
-import Head from 'next/head'
-import { useState, useEffect } from 'react'
+import { Error } from 'components'
+import { Player } from 'features/player'
 import ms from 'ms'
-import { Error } from '../components'
-import { Player } from '../features'
-import { isBrowserModern } from '../utils'
+import Head from 'next/head'
+import { useEffect, useState } from 'react'
+import { isBrowserModern } from 'utils'
 
 const isBrowserOld = !isBrowserModern()
 

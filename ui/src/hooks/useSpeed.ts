@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
 import ms from 'ms'
+import { useCallback, useEffect, useState } from 'react'
 
 const millisecondsToSeconds = m => m / 1000
 const SPEEDS_IN_MILLISENCONDS = [ms('10s'), ms('1m'), ms('5m'), ms('10m')]

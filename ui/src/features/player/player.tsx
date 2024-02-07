@@ -1,14 +1,14 @@
+import { Toast } from 'components'
+import { RemoteCommand, useOriginalAudio, useRemote } from 'features/player'
+import { Subtitle } from 'features/subtitle'
+import { useMetadata, useSpeed } from 'hooks'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useFullscreen } from 'react-use'
-import { Subtitle } from '..'
-import { Toast } from '../../components'
-import { useMetadata, useRemote, useSpeed } from '../../hooks'
-import { useOriginalAudio } from './useOriginalAudio'
 
 export const Player = ({ onError }) => {
-  const containerRef = useRef(null)
-  const videoRef = useRef(null)
-  const trackRef = useRef(null)
+  const containerRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<ExperimentalHTMLVideoElement>(null)
+  const trackRef = useRef<HTMLTrackElement>(null)
 
   const [immersed, setImmersed] = useState(false)
   const [dirty, setDirty] = useState(false)
@@ -21,7 +21,7 @@ export const Player = ({ onError }) => {
   const forwardSpeed = useSpeed()
 
   const handleCommand = useCallback(
-    command => {
+    (command: RemoteCommand) => {
       const play = () => {
         videoRef.current.play()
         setImmersed(true)
@@ -33,19 +33,19 @@ export const Player = ({ onError }) => {
         setImmersed(false)
       }
 
-      if (command === 'toogle') {
+      if (command === RemoteCommand.Toogle) {
         videoRef.current.paused ? play() : pause()
       }
 
-      if (command === 'restart') {
+      if (command === RemoteCommand.Restart) {
         videoRef.current.currentTime = 0
       }
 
-      if (command === 'back') {
+      if (command === RemoteCommand.Back) {
         videoRef.current.currentTime -= backSpeed()
       }
 
-      if (command === 'forward') {
+      if (command === RemoteCommand.Forward) {
         videoRef.current.currentTime += forwardSpeed()
       }
     },
@@ -76,7 +76,7 @@ export const Player = ({ onError }) => {
     <main
       ref={containerRef}
       className={`h-screen w-screen bg-black ${cursor}`}
-      onClick={() => handleCommand('toogle')}
+      onClick={() => handleCommand(RemoteCommand.Toogle)}
     >
       <Toast />
       <video

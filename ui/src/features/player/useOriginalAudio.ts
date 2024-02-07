@@ -1,10 +1,13 @@
-import { useEffect } from 'react'
-import { useMetadata } from '../../hooks'
+import { useMetadata } from 'hooks'
+import { MutableRefObject, useEffect } from 'react'
 
 const langNames = new Intl.DisplayNames(['en'], { type: 'language' })
-const isSameLanguage = (a, b) => langNames.of(a) === langNames.of(b)
+const isSameLanguage = (a: string, b: string) =>
+  langNames.of(a) === langNames.of(b)
 
-export const useOriginalAudio = videoRef => {
+export const useOriginalAudio = (
+  videoRef: MutableRefObject<ExperimentalHTMLVideoElement>
+) => {
   const metadata = useMetadata()
 
   useEffect(() => {

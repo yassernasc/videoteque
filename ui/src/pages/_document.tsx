@@ -1,9 +1,9 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Head, Html, Main, NextScript } from 'next/document'
 
 const Document = () => (
   <Html>
     <Head></Head>
-    <body className="antialiased">
+    <body className="bg-zinc-100 text-zinc-900 antialiased">
       <Main />
       <NextScript />
     </body>

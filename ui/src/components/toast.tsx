@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useTimeoutFn, usePrevious } from 'react-use'
 import { Transition } from '@headlessui/react'
+import { useSyncSubtitle } from 'features/subtitle'
 import ms from 'ms'
-import { useSubtitleOffset } from '../features/subtitle/useSubtitleOffset'
+import { useEffect, useState } from 'react'
+import { usePrevious, useTimeoutFn } from 'react-use'
 
 export const Toast = () => {
   const [show, setShow] = useState(false)
   const [, , reset] = useTimeoutFn(() => setShow(false), ms('2s'))
-  const offset = useSubtitleOffset()
+  const offset = useSyncSubtitle()
   const prevOffset = usePrevious(offset)
 
   useEffect(() => {
@@ -30,11 +30,10 @@ export const Toast = () => {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="absolute top-0 right-0 mx-5 my-6 flex w-1/4 flex-col gap-0.5 rounded border border-zinc-200 bg-white p-3.5 text-[1.8vh] shadow-md">
-        <span className="font-bold">Subtitle Updated</span>
+      <div className="absolute top-0 right-0 mx-5 my-6 flex w-1/4 flex-col gap-0.5 rounded border border-zinc-200 bg-white p-3.5 shadow-md">
+        <span className="font-semibold">Subtitle Updated</span>
         <span>
-          Current Offset:{' '}
-          <span className="text-[2.4vh] font-bold">{offset}</span>
+          Current Offset: <span className="text-lg font-bold">{offset}</span>
         </span>
       </div>
     </Transition>

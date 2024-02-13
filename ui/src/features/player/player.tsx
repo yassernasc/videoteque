@@ -11,8 +11,6 @@ export const Player = ({ onError }) => {
   const trackRef = useRef<HTMLTrackElement>(null)
 
   const [immersed, setImmersed] = useState(false)
-  const [dirty, setDirty] = useState(false)
-  useFullscreen(containerRef, dirty)
 
   const metadata = useMetadata()
   useOriginalAudio(videoRef)
@@ -25,12 +23,15 @@ export const Player = ({ onError }) => {
       const play = () => {
         videoRef.current.play()
         setImmersed(true)
-        setDirty(true)
       }
 
       const pause = () => {
         videoRef.current.pause()
         setImmersed(false)
+      }
+
+      if (command === RemoteCommand.Pause) {
+        pause()
       }
 
       if (command === RemoteCommand.Toogle) {
@@ -51,8 +52,18 @@ export const Player = ({ onError }) => {
     },
     [backSpeed, forwardSpeed]
   )
-
   useRemote(handleCommand)
+
+  const onFullscreenExit = useCallback(
+    (error?: Error) => {
+      if (!error) {
+        handleCommand(RemoteCommand.Pause)
+        setImmersed(false)
+      }
+    },
+    [handleCommand]
+  )
+  useFullscreen(containerRef, immersed, { onClose: onFullscreenExit })
 
   useEffect(() => {
     const messages = {
@@ -69,7 +80,7 @@ export const Player = ({ onError }) => {
     }
   }, [onError])
 
-  const fit = dirty ? 'object-contain' : 'object-cover'
+  const fit = immersed ? 'object-contain' : 'object-cover'
   const cursor = immersed ? 'cursor-none' : 'cursor-pointer'
 
   return (

@@ -1,6 +1,7 @@
 export enum RemoteCommand {
-  Toogle,
-  Forward,
   Back,
+  Forward,
+  Pause,
   Restart,
+  Toogle,
 }

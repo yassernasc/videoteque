@@ -5,19 +5,23 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	jwt "github.com/golang-jwt/jwt/v5"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
+	"time"
+	"videoteque/cache"
 	"videoteque/fs"
 	"videoteque/lang"
 	"videoteque/movie"
 )
 
 const (
-	agent   = "videoteque v0.1"
-	apiKey  = "wWESRShMeQTiozKJrZlPX2nOlKsWiSpZ"
-	baseUrl = "https://api.opensubtitles.com/api/v1"
+	agent         = "videoteque v0.1"
+	apiKey        = "wWESRShMeQTiozKJrZlPX2nOlKsWiSpZ"
+	baseUrl       = "https://api.opensubtitles.com/api/v1"
+	tokenCacheKey = "os-token"
 )
 
 type Credentials struct {
@@ -97,6 +101,12 @@ func downloadAutomatically() error {
 }
 
 func login() (token string, err error) {
+	if t := cache.Read(tokenCacheKey); isJWTNotExpired(t) {
+		return t, nil
+	} else {
+		cache.Delete(tokenCacheKey)
+	}
+
 	url := baseUrl + "/login"
 
 	buf, _ := json.Marshal(credentials)
@@ -126,7 +136,10 @@ func login() (token string, err error) {
 		return "", err
 	}
 
-	return result.Token, err
+	t := result.Token
+	cache.Write(tokenCacheKey, []byte(t))
+
+	return t, err
 }
 
 func search() (id int, err error) {
@@ -224,4 +237,22 @@ func download(subId int, token string) error {
 
 	Entry = path
 	return nil
+}
+
+func isJWTNotExpired(tokenString string) bool {
+	if tokenString == "" {
+		return false
+	}
+
+	t, _, err := new(jwt.Parser).ParseUnverified(tokenString, jwt.MapClaims{})
+	if err != nil {
+		return false
+	}
+
+	exp, err := t.Claims.GetExpirationTime()
+	if err != nil {
+		return false
+	}
+
+	return time.Now().Before(exp.Time)
 }

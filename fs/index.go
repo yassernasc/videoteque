@@ -1,19 +1,12 @@
 package fs
 
 import (
-	"github.com/adrg/xdg"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 )
-
-const appFolder = "videoteque"
-
-func ConfigDir() string {
-	return filepath.Join(xdg.ConfigHome, appFolder)
-}
 
 func IsFile(str string) bool {
 	_, err := os.Stat(str)

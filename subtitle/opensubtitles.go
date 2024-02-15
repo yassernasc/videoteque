@@ -68,15 +68,7 @@ func SetCredentials(username string, password string) {
 	credentials = Credentials{username, password}
 }
 
-func InitOpenSubtitlesIntegration() error {
-	if !shouldProceed() {
-		return errors.New("automatic subtitle download isn't required this time")
-	}
-
-	return downloadAutomatically()
-}
-
-func shouldProceed() bool {
+func shouldDownload() bool {
 	return Entry == "" &&
 		credentials.Username != "" &&
 		credentials.Password != "" &&

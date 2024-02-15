@@ -5,21 +5,29 @@ import (
 	"github.com/asticode/go-astisub"
 	iconv "github.com/djimenez/iconv-go"
 	"github.com/gogs/chardet"
+	"net/http"
 	"os"
 	"videoteque/fs"
 )
 
 var Entry string
 
-func Get() string {
+func Get() (subtitle string, statusCode int, err error) {
+	if shouldDownload() {
+		err := downloadAutomatically()
+		if err != nil {
+			return "", http.StatusInternalServerError, err
+		}
+	}
+
 	if Entry == "" {
-		return Entry
+		return "", http.StatusNoContent, nil
 	}
 
 	vtt := ensureVTT(Entry)
 	vttUtf8 := ensureUTF8(vtt)
 
-	return vttUtf8
+	return vttUtf8, http.StatusOK, nil
 }
 
 func IsValidEntry(path string) bool {

@@ -80,6 +80,12 @@ export const Player = ({ onError }) => {
     }
   }, [onError])
 
+  useEffect(() => {
+    videoRef.current.onended = () => {
+      setImmersed(false)
+    }
+  }, [])
+
   const fit = immersed ? 'object-contain' : 'object-cover'
   const cursor = immersed ? 'cursor-none' : 'cursor-pointer'
 

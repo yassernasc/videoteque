@@ -22,6 +22,7 @@ const styles = [
 ]
 const colors = [
   { label: 'yellow', value: Color.Yellow },
+  { label: 'amber', value: Color.Amber },
   { label: 'white', value: Color.White },
 ]
 const fonts = [

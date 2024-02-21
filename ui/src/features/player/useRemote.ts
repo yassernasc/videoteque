@@ -19,7 +19,8 @@ const codeKeyMap: CodeMap = {
 const useRemote = (callback: Callback) => {
   useEffect(() => {
     const handleCode = ({ code, keyCode }) => {
-      const command = codeMap[code] || codeKeyMap[keyCode]
+      const command = codeMap[code] ?? codeKeyMap[keyCode]
+
       if (command) {
         callback(command)
       }

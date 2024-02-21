@@ -19,6 +19,7 @@ type WsMessage = {
 }
 
 const colorMap: Record<Color, string> = {
+  [Color.Amber]: 'text-amber-400',
   [Color.White]: 'text-white',
   [Color.Yellow]: 'text-yellow-400',
 }
@@ -33,7 +34,7 @@ const updateFont = (font: Font) => fontMap[font]
 
 const styleMap: Record<Style, string> = {
   [Style.Bordered]: 'popcorn-shadow',
-  [Style.Shadowed]: 'bg-black/40',
+  [Style.Shadowed]: 'bg-black/60',
 }
 const updateStyle = (style: Style) => styleMap[style]
 
@@ -84,37 +85,40 @@ export const useSubtitleSettings = () => {
   const { message } = useWs<WsMessage>()
 
   useEffect(() => {
-    if (message) {
-      if (Object.hasOwn(message, 'style')) {
-        setStyle(updateStyle(message.style))
-        updateChanged()
-      }
-
-      if (Object.hasOwn(message, 'color')) {
-        setColor(updateColor(message.color))
-        updateChanged()
-      }
-
-      if (Object.hasOwn(message, 'font')) {
-        setFont(updateFont(message.font))
-        updateChanged()
-      }
-
-      if (Object.hasOwn(message, 'position')) {
-        setPosition(currentPosition =>
-          updatePosition({ payload: message.position, currentPosition })
-        )
-        updateChanged()
-      }
-
-      if (Object.hasOwn(message, 'size')) {
-        setSize(currentSize =>
-          updateSize({ payload: message.size, currentSize })
-        )
-        updateChanged()
-      }
+    if (Object.hasOwn(message, 'style')) {
+      setStyle(updateStyle(message.style))
+      updateChanged()
     }
-  }, [message, updateChanged])
+  }, [message.style, updateChanged])
+
+  useEffect(() => {
+    if (Object.hasOwn(message, 'color')) {
+      setColor(updateColor(message.color))
+      updateChanged()
+    }
+  }, [message.color, updateChanged])
+
+  useEffect(() => {
+    if (Object.hasOwn(message, 'font')) {
+      setFont(updateFont(message.font))
+      updateChanged()
+    }
+  }, [message.font, updateChanged])
+
+  useEffect(() => {
+    if (Object.hasOwn(message, 'position')) {
+      setPosition(currentPosition =>
+        updatePosition({ payload: message.position, currentPosition })
+      )
+    }
+  }, [message.position, updateChanged])
+
+  useEffect(() => {
+    if (Object.hasOwn(message, 'size')) {
+      setSize(currentSize => updateSize({ payload: message.size, currentSize }))
+      updateChanged()
+    }
+  }, [message.size, updateChanged])
 
   return { color, font, position, size, style, changed }
 }

@@ -4,6 +4,7 @@ enum Style {
 }
 
 enum Color {
+  Amber,
   White,
   Yellow,
 }

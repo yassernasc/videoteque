@@ -28,7 +28,7 @@
 @layer base {
     html {
         @media screen(fhd) {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
         }
 
         @media screen(uhd) {

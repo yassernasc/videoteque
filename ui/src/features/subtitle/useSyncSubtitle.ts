@@ -43,11 +43,11 @@ export const useSyncSubtitle = (trackRef?: TrackArg) => {
   )
 
   useEffect(() => {
-    if (message?.state) {
+    if (Object.hasOwn(message, 'state')) {
       const offset = offsetMap[message.state]
       syncSubtitles(offset)
     }
-  }, [message, syncSubtitles])
+  }, [message.state, syncSubtitles])
 
   return formatOffset(totalOffset)
 }
